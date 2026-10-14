@@ -1,0 +1,110 @@
+---
+import { Image } from 'astro:assets';
+import hero from '../../assets/photos/hero-dune-4x4.webp';
+import Button from '../ui/Button.astro';
+import Compass from '../ui/Compass.astro';
+import { site, liens } from '../../data/site';
+
+const faits = [
+  { grand: '100 %', petit: 'féminin' },
+  { grand: '0', petit: 'GPS, 0 téléphone' },
+  { grand: '7 jours', petit: 'de compétition, dont 2 marathons' },
+  { grand: '15 jours', petit: 'd’événement encadré' },
+];
+---
+<section class="hero" aria-labelledby="hero-titre">
+  <div class="hero-media" aria-hidden="true">
+    <Image src={hero} alt="" widths={[640, 960, 1280]} sizes="100vw" loading="eager" fetchpriority="high" />
+  </div>
+
+  <div class="container hero-inner">
+    <p class="kicker rise"><span class="dot"></span>{site.edition} · {site.dates}</p>
+
+    <h1 id="hero-titre" class="rise" style="--d: .08s">
+      Chaque kilomètre<br /><span class="accent">compte.</span>
+    </h1>
+
+    <p class="lead rise" style="--d: .18s">
+      Une compétition automobile exclusivement féminine, fondée sur la navigation hors-piste, la stratégie, la précision et l’endurance. Ici, la vitesse n’est pas le critère.
+    </p>
+
+    <div class="actions rise" style="--d: .28s">
+      <Button href={liens.demandeInfos} official size="l">Demande d’informations</Button>
+      <Button variant="ghost" size="l" data-video-open aria-haspopup="dialog">
+        <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><circle cx="12" cy="12" r="11" fill="none" stroke="currentColor" stroke-width="1.6" /><path d="M10 8l6 4-6 4z" fill="currentColor" /></svg>
+        Découvrez la vidéo
+      </Button>
+    </div>
+
+    <ul class="faits rise" style="--d: .4s" aria-label="Le Rallye en quelques faits">
+      {faits.map((f) => (
+        <li><strong>{f.grand}</strong><span>{f.petit}</span></li>
+      ))}
+    </ul>
+  </div>
+
+  <div class="compass-wrap" aria-hidden="true"><Compass /></div>
+  <a class="scroll-cue" href="#le-defi" aria-label="Découvrir le défi sportif">
+    <span>Le défi</span>
+    <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M12 4v14m0 0l-6-6m6 6l6-6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /></svg>
+  </a>
+</section>
+
+<style>
+  .hero { position: relative; min-height: 100svh; display: grid; align-items: end; isolation: isolate; color: var(--white); background: var(--violet-950); overflow: hidden; }
+  .hero-media { position: absolute; inset: 0; z-index: -2; }
+  .hero-media :global(img) { width: 100%; height: 100%; object-fit: cover; object-position: 66% 58%; transform: scale(1.06); animation: zoom 22s ease-out forwards; }
+  @keyframes zoom { to { transform: scale(1); } }
+  .hero::before {
+    content: ''; position: absolute; inset: 0; z-index: -1;
+    background:
+      linear-gradient(90deg, rgba(23, 10, 41, 0.94) 0%, rgba(23, 10, 41, 0.72) 38%, rgba(23, 10, 41, 0.12) 78%),
+      linear-gradient(0deg, rgba(23, 10, 41, 0.9) 0%, rgba(23, 10, 41, 0) 42%),
+      linear-gradient(180deg, rgba(23, 10, 41, 0.55) 0%, rgba(23, 10, 41, 0) 22%);
+  }
+
+  .hero-inner { padding-top: calc(var(--band-h) + var(--nav-h) + 3.5rem); padding-bottom: clamp(5.4rem, 8vw, 6.4rem); }
+
+  .kicker { display: inline-flex; align-items: center; gap: 0.7rem; padding: 0.5rem 1.1rem; border-radius: 999px; background: rgba(255, 255, 255, 0.12); border: 1px solid rgba(255, 255, 255, 0.25); backdrop-filter: blur(8px); font-size: 0.88rem; font-weight: 600; letter-spacing: 0.04em; }
+  .dot { width: 9px; height: 9px; border-radius: 50%; background: var(--coral-500); box-shadow: 0 0 0 5px rgba(255, 125, 102, 0.28); animation: pulse 2.4s infinite; }
+  @keyframes pulse { 50% { box-shadow: 0 0 0 9px rgba(255, 125, 102, 0); } }
+
+  h1 { margin-top: 1.4rem; font-size: clamp(2.7rem, 7.8vw, 6.8rem); line-height: 0.95; text-transform: uppercase; letter-spacing: -0.03em; text-shadow: 0 6px 40px rgba(0, 0, 0, 0.35); }
+  .accent { color: var(--coral-500); }
+
+  .lead { margin-top: 1.6rem; max-width: 40rem; font-size: clamp(1.05rem, 1.7vw, 1.3rem); line-height: 1.6; color: rgba(255, 255, 255, 0.92); }
+
+  .actions { display: flex; flex-wrap: wrap; gap: 0.9rem 1rem; margin-top: 2.2rem; }
+
+  .faits { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 0.9rem; margin-top: clamp(2.2rem, 5vw, 3.6rem); max-width: 60rem; }
+  .faits li { padding: 1rem 1.15rem; border-radius: var(--radius-m); background: rgba(23, 10, 41, 0.55); border: 1px solid rgba(255, 255, 255, 0.16); backdrop-filter: blur(10px); display: grid; gap: 0.1rem; }
+  .faits strong { font-family: var(--font-title); font-size: clamp(1.5rem, 2.6vw, 2.1rem); font-weight: 800; color: var(--coral-500); line-height: 1.1; }
+  .faits span { font-size: 0.86rem; line-height: 1.35; color: rgba(255, 255, 255, 0.85); }
+
+  .compass-wrap { position: absolute; right: clamp(1rem, 5vw, 5rem); top: 50%; width: clamp(140px, 16vw, 250px); transform: translateY(-62%); opacity: 0.85; pointer-events: none; }
+  .scroll-cue { position: absolute; right: var(--gutter); bottom: 1.6rem; display: grid; justify-items: center; gap: 0.2rem; font-size: 0.74rem; letter-spacing: 0.14em; text-transform: uppercase; text-decoration: none; opacity: 0.85; }
+  .scroll-cue svg { animation: bob 2s ease-in-out infinite; }
+  @keyframes bob { 50% { transform: translateY(6px); } }
+
+  @media (max-width: 960px) {
+    .hero { align-items: end; }
+    .hero-media { inset: 0 0 auto 0; height: min(44svh, 400px); -webkit-mask-image: linear-gradient(180deg, #000 55%, transparent 100%); mask-image: linear-gradient(180deg, #000 55%, transparent 100%); }
+    .hero-media :global(img) { object-position: 70% 50%; transform: none; animation: none; }
+    .hero::before {
+      background:
+        linear-gradient(0deg, rgba(23, 10, 41, 0.35) 0%, rgba(23, 10, 41, 0) 40%),
+        linear-gradient(180deg, rgba(23, 10, 41, 0.6) 0%, rgba(23, 10, 41, 0) 22%);
+    }
+    .hero-inner { padding-top: calc(var(--band-h) + var(--nav-h) + min(29svh, 250px)); }
+    .faits { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .compass-wrap { top: calc(var(--band-h) + var(--nav-h) + 0.6rem); right: 1rem; width: 84px; transform: none; opacity: 0.55; }
+    .scroll-cue { display: none; }
+  }
+  @media (max-width: 520px) {
+    .actions :global(.btn) { width: 100%; }
+    h1 { font-size: clamp(2.3rem, 11.5vw, 3.4rem); margin-top: 1rem; }
+    .lead { font-size: 1rem; margin-top: 1rem; }
+    .actions { margin-top: 1.4rem; }
+    .faits { margin-top: 1.6rem; }
+  }
+</style>

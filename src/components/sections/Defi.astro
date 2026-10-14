@@ -1,0 +1,92 @@
+---
+import { Image } from 'astro:assets';
+import navigation from '../../assets/photos/navigation-carte.jpg';
+import Button from '../ui/Button.astro';
+import { piliers, alt } from '../../data/contenu';
+import { liens } from '../../data/site';
+
+const icones: Record<string, string> = {
+  navigation: 'M12 3a9 9 0 100 18 9 9 0 000-18zm3.5 5.5l-2 5-5 2 2-5z',
+  strategie: 'M5 19a2 2 0 100-4 2 2 0 000 4zm14-10a2 2 0 100-4 2 2 0 000 4zM7 17h6a3 3 0 000-6h-2a3 3 0 010-6h6',
+  precision: 'M12 3v4m0 10v4M3 12h4m10 0h4M12 8a4 4 0 100 8 4 4 0 000-8z',
+  endurance: 'M20 14.5A8 8 0 019.5 4 8 8 0 1020 14.5z',
+};
+---
+<section class="section defi" id="le-defi" aria-labelledby="defi-titre">
+  <div class="container">
+    <div class="head">
+      <div class="txt">
+        <p class="eyebrow reveal">Le défi sportif</p>
+        <h2 id="defi-titre" class="reveal" style="--d:.06s">Une compétition de précision,<br />pas de vitesse.</h2>
+        <p class="intro reveal" style="--d:.14s">
+          Une navigation en totale autonomie, hors-piste, à travers le sud marocain. Un engagement physique, endurant, mental et émotionnel : ici, chaque décision se prend à la carte et à la boussole.
+        </p>
+      </div>
+
+      <figure class="photo reveal" style="--d:.2s">
+        <Image src={navigation} alt={alt.navigation} widths={[480, 800]} sizes="(min-width: 960px) 40vw, 92vw" />
+        <figcaption><strong>Carte et boussole</strong> avant le départ d’une étape</figcaption>
+      </figure>
+    </div>
+
+    <ul class="piliers" role="list">
+      {piliers.map((p, i) => (
+        <li class="pilier reveal" style={`--d:${0.08 * i}s`}>
+          <span class="num" aria-hidden="true">0{i + 1}</span>
+          <span class="ico" aria-hidden="true">
+            <svg viewBox="0 0 24 24" width="30" height="30"><path d={icones[p.id]} fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" /></svg>
+          </span>
+          <h3>{p.titre}</h3>
+          <p>{p.texte}</p>
+        </li>
+      ))}
+    </ul>
+
+    <div class="regle reveal">
+      <p class="mot">Chaque kilomètre <span>compte.</span></p>
+      <div class="expl">
+        <p>Au classement, ce n’est pas le plus rapide qui l’emporte : c’est l’équipage qui valide le plus de balises en parcourant le moins de kilomètres. Chaque trajectoire choisie se paie ou se gagne.</p>
+        <Button href={liens.concept} official variant="outline">En savoir plus</Button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .defi { background: var(--white); }
+  .head { display: grid; grid-template-columns: 1.25fr 0.75fr; gap: clamp(2rem, 5vw, 5rem); align-items: center; }
+  .eyebrow { font-size: 0.85rem; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: var(--violet-700); display: inline-flex; align-items: center; gap: 0.8rem; }
+  .eyebrow::before { content: ''; width: 36px; height: 3px; background: var(--coral-500); border-radius: 3px; }
+  h2 { margin-top: 1rem; font-size: clamp(2.2rem, 5.2vw, 4.4rem); text-transform: uppercase; color: var(--violet-900); letter-spacing: -0.025em; }
+  .intro { margin-top: 1.5rem; max-width: 38rem; font-size: 1.15rem; color: var(--ink-soft); }
+
+  .photo { position: relative; margin: 0; border-radius: var(--radius-l); overflow: hidden; box-shadow: var(--shadow-m); aspect-ratio: 4 / 3.4; }
+  .photo :global(img) { width: 100%; height: 100%; object-fit: cover; object-position: 62% 40%; transition: transform 1.2s var(--ease); }
+  .photo:hover :global(img) { transform: scale(1.05); }
+  .photo figcaption { position: absolute; left: 0; right: 0; bottom: 0; padding: 2.4rem 1.3rem 1.1rem; font-size: 0.92rem; color: var(--white); background: linear-gradient(0deg, rgba(23, 10, 41, 0.88), transparent); }
+  .photo strong { color: var(--coral-500); }
+
+  .piliers { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.2rem; margin-top: clamp(3rem, 6vw, 5rem); }
+  .pilier { position: relative; padding: 2rem 1.6rem 1.8rem; border-radius: var(--radius-l); background: var(--violet-50); border: 1px solid var(--violet-100); overflow: hidden; transition: transform 0.4s var(--ease), box-shadow 0.4s, background-color 0.4s; }
+  .pilier:hover { transform: translateY(-6px); box-shadow: var(--shadow-m); background: var(--white); }
+  .num { position: absolute; right: 1.2rem; top: 0.6rem; font-family: var(--font-title); font-size: 3.4rem; font-weight: 800; color: var(--violet-100); line-height: 1; transition: color 0.4s; }
+  .pilier:hover .num { color: var(--rose-100); }
+  .ico { display: grid; place-items: center; width: 58px; height: 58px; border-radius: 50%; background: var(--violet-700); color: var(--white); margin-bottom: 1.3rem; }
+  h3 { font-size: 1.4rem; text-transform: uppercase; color: var(--violet-900); }
+  .pilier p { margin-top: 0.7rem; font-size: 0.97rem; color: var(--ink-soft); line-height: 1.6; }
+
+  .regle { display: grid; grid-template-columns: 1.1fr 1fr; gap: clamp(1.5rem, 4vw, 4rem); align-items: center; margin-top: clamp(3rem, 6vw, 5rem); padding: clamp(2rem, 4vw, 3.4rem); border-radius: var(--radius-l); background: linear-gradient(120deg, var(--violet-900), var(--violet-700)); color: var(--white); }
+  .mot { font-family: var(--font-title); font-weight: 800; text-transform: uppercase; font-size: clamp(2rem, 4.6vw, 3.9rem); line-height: 1; letter-spacing: -0.02em; }
+  .mot span { color: var(--coral-500); }
+  .expl { display: grid; gap: 1.3rem; justify-items: start; }
+  .expl p { font-size: 1.08rem; color: rgba(255, 255, 255, 0.92); }
+  .regle :global(.btn--outline) { color: var(--white); border-color: var(--white); }
+  .regle :global(.btn--outline:hover) { background: var(--white); color: var(--violet-800); }
+
+  @media (max-width: 1100px) { .piliers { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 860px) {
+    .head, .regle { grid-template-columns: 1fr; }
+    .photo { aspect-ratio: 4 / 3; }
+  }
+  @media (max-width: 560px) { .piliers { grid-template-columns: 1fr; } }
+</style>

@@ -1,0 +1,32 @@
+---
+import { Image } from 'astro:assets';
+import fond from '../../assets/photos/contre-jour-dunes.webp';
+import Button from '../ui/Button.astro';
+import Compass from '../ui/Compass.astro';
+import { liens } from '../../data/site';
+---
+<section class="cta" aria-labelledby="cta-titre">
+  <div class="bg" aria-hidden="true"><Image src={fond} alt="" widths={[960, 1280]} sizes="100vw" loading="lazy" /></div>
+  <div class="compass" aria-hidden="true"><Compass /></div>
+  <div class="container in">
+    <h2 id="cta-titre" class="reveal">Prête à relever<br />le <span>défi ?</span></h2>
+    <p class="reveal" style="--d:.1s">Demandez des informations, rejoignez une réunion visio gratuite et posez toutes vos questions à l’équipe du Rallye. Le premier kilomètre commence ici.</p>
+    <div class="actions reveal" style="--d:.2s">
+      <Button href={liens.demandeInfos} official size="l">Demande d’infos</Button>
+      <Button href={liens.reunions} official size="l" variant="ghost">Réunion d’infos</Button>
+    </div>
+  </div>
+</section>
+
+<style>
+  .cta { position: relative; isolation: isolate; color: var(--white); padding-block: clamp(5rem, 11vw, 9rem); text-align: center; overflow: hidden; background: var(--violet-950); }
+  .bg { position: absolute; inset: 0; z-index: -2; }
+  .bg :global(img) { width: 100%; height: 100%; object-fit: cover; }
+  .cta::before { content: ''; position: absolute; inset: 0; z-index: -1; background: radial-gradient(80% 90% at 50% 50%, rgba(43, 18, 71, 0.82), rgba(23, 10, 41, 0.94)); }
+  .compass { position: absolute; left: 50%; top: 50%; width: min(720px, 90vw); transform: translate(-50%, -50%); opacity: 0.12; z-index: -1; pointer-events: none; }
+  h2 { font-size: clamp(2.6rem, 7vw, 6rem); text-transform: uppercase; letter-spacing: -0.03em; line-height: 0.98; }
+  h2 span { color: var(--coral-500); }
+  .in > p { max-width: 38rem; margin: 1.6rem auto 0; font-size: 1.15rem; color: rgba(255, 255, 255, 0.92); }
+  .actions { display: flex; flex-wrap: wrap; justify-content: center; gap: 1rem; margin-top: 2.4rem; }
+  @media (max-width: 520px) { .actions :global(.btn) { width: 100%; } }
+</style>

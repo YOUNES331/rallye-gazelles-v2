@@ -1,0 +1,46 @@
+---
+// Bouton réutilisable. `official` : le lien mène au site officiel actuel (nouvel onglet, pictogramme ↗).
+interface Props {
+  href?: string;
+  variant?: 'primary' | 'light' | 'ghost' | 'outline';
+  official?: boolean;
+  size?: 'm' | 'l';
+  class?: string;
+  [key: string]: unknown;
+}
+const { href, variant = 'primary', official = false, size = 'm', class: extra = '', ...rest } = Astro.props;
+const cls = `btn btn--${variant} btn--${size} ${official ? 'official' : ''} ${extra}`.trim();
+const ext = official ? { target: '_blank', rel: 'noopener noreferrer' } : {};
+---
+{href ? (
+  <a class={cls} href={href} {...ext} {...rest}>
+    <slot />
+    {official && <span class="sr-only"> (site officiel, s’ouvre dans un nouvel onglet)</span>}
+  </a>
+) : (
+  <button class={cls} type="button" {...rest}><slot /></button>
+)}
+
+<style>
+  .btn {
+    display: inline-flex; align-items: center; justify-content: center; gap: 0.6rem;
+    min-height: 52px; padding: 0.85rem 1.7rem; border-radius: 999px; border: 2px solid transparent;
+    font-weight: 700; font-size: 1rem; line-height: 1.2; text-decoration: none; text-align: center;
+    transition: transform 0.25s var(--ease), background-color 0.25s, color 0.25s, border-color 0.25s, box-shadow 0.25s;
+  }
+  .btn--l { min-height: 58px; padding-inline: 2.1rem; font-size: 1.08rem; }
+  .btn:hover { transform: translateY(-2px); }
+  .btn:active { transform: translateY(0); }
+
+  .btn--primary { background: var(--coral-500); color: var(--ink); box-shadow: 0 10px 28px rgba(255, 125, 102, 0.38); }
+  .btn--primary:hover { background: #ff9582; box-shadow: 0 14px 34px rgba(255, 125, 102, 0.5); }
+
+  .btn--light { background: var(--white); color: var(--violet-800); }
+  .btn--light:hover { background: var(--violet-50); }
+
+  .btn--ghost { background: rgba(255, 255, 255, 0.1); color: var(--white); border-color: rgba(255, 255, 255, 0.55); backdrop-filter: blur(6px); }
+  .btn--ghost:hover { background: rgba(255, 255, 255, 0.2); border-color: var(--white); }
+
+  .btn--outline { background: transparent; color: var(--violet-700); border-color: var(--violet-700); }
+  .btn--outline:hover { background: var(--violet-700); color: var(--white); }
+</style>

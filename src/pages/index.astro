@@ -1,0 +1,40 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import SiteHeader from '../components/layout/SiteHeader.astro';
+import SiteFooter from '../components/layout/SiteFooter.astro';
+import SectionDots from '../components/layout/SectionDots.astro';
+import ProtoBadge from '../components/layout/ProtoBadge.astro';
+import VideoModal from '../components/ui/VideoModal.astro';
+import Hero from '../components/sections/Hero.astro';
+import Defi from '../components/sections/Defi.astro';
+import Chiffres from '../components/sections/Chiffres.astro';
+import Impossible from '../components/sections/Impossible.astro';
+import Parcours from '../components/sections/Parcours.astro';
+import Valeurs from '../components/sections/Valeurs.astro';
+import Temoignages from '../components/sections/Temoignages.astro';
+import Galerie from '../components/sections/Galerie.astro';
+import Partenaires from '../components/sections/Partenaires.astro';
+import CtaFinal from '../components/sections/CtaFinal.astro';
+---
+<BaseLayout
+  title="Rallye Aïcha des Gazelles du Maroc | Chaque kilomètre compte"
+  description="Compétition automobile 100 % féminine de navigation hors-piste dans le sud marocain. Précision, stratégie, endurance : découvrez le défi et devenez Gazelle."
+>
+  <SiteHeader />
+  <SectionDots />
+  <main id="contenu">
+    <Hero />
+    <Defi />
+    <Chiffres />
+    <Impossible />
+    <Parcours />
+    <Valeurs />
+    <Temoignages />
+    <Galerie />
+    <Partenaires />
+    <CtaFinal />
+  </main>
+  <SiteFooter />
+  <VideoModal />
+  <ProtoBadge />
+</BaseLayout>

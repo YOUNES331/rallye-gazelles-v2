@@ -1,0 +1,93 @@
+---
+import { Image } from 'astro:assets';
+import sourires from '../../assets/photos/cockpit-sourires.webp';
+import dunes from '../../assets/photos/flotte-plage.webp';
+import coeur from '../../assets/photos/coeur-de-gazelles.jpg';
+import helico from '../../assets/photos/helicoptere-equipe.webp';
+import assistance from '../../assets/photos/assistance-mecanique.webp';
+import Button from '../ui/Button.astro';
+import { alt } from '../../data/contenu';
+import { liens } from '../../data/site';
+
+const valeurs = [
+  { titre: 'Empowerment féminin', texte: 'Un espace où l’on se sent légitime, ensemble et soutenue : ici, la compétition devient entraide.', img: sourires, alt: alt.sourires, pos: '50% 40%' },
+  { titre: 'Respect de l’environnement', texte: 'Certifié ISO 14001 depuis 2010 et audité chaque année par un organisme indépendant. Au classement, gagner, c’est rouler moins.', img: dunes, alt: alt.flotte, pos: '50% 50%' },
+  { titre: 'Solidarité sur le terrain', texte: 'Avec la caravane médicale de Cœur de Gazelles, plus de 100 000 personnes ont déjà reçu des soins gratuits dans des zones isolées.', img: coeur, alt: alt.coeur, pos: '50% 35%' },
+];
+---
+<section class="section valeurs" id="valeurs" aria-labelledby="valeurs-titre">
+  <div class="container">
+    <header class="head">
+      <p class="eyebrow reveal">Valeurs et engagements</p>
+      <h2 id="valeurs-titre" class="reveal" style="--d:.06s">Nos valeurs,<br />notre <span>boussole.</span></h2>
+    </header>
+
+    <ul class="cartes" role="list">
+      {valeurs.map((v, i) => (
+        <li class="carte reveal" style={`--d:${0.1 * i}s`}>
+          <Image src={v.img} alt={v.alt} widths={[480, 720]} sizes="(min-width: 960px) 30vw, 92vw" loading="lazy" style={`object-position:${v.pos}`} />
+          <div class="in">
+            <h3>{v.titre}</h3>
+            <p>{v.texte}</p>
+          </div>
+        </li>
+      ))}
+    </ul>
+
+    <div class="actions reveal">
+      <Button href={liens.valeurs} official>Découvrez nos valeurs</Button>
+      <Button href={liens.coeurDeGazelles} official variant="outline">Découvrez Cœur de gazelles</Button>
+    </div>
+
+    <div class="securite" aria-labelledby="secu-titre">
+      <div class="secu-txt reveal">
+        <h3 id="secu-titre">Un défi exigeant,<br />un cadre solide.</h3>
+        <p>Le Rallye se court en autonomie, mais jamais seule. Une organisation lourde veille sur chaque équipage pendant les 15 jours de l’événement.</p>
+        <ul class="points" role="list">
+          <li><strong>24 h/24</strong> suivi satellite et coordination permanente</li>
+          <li><strong>2</strong> hélicoptères prêts à intervenir, urgentistes et infirmiers</li>
+          <li><strong>50</strong> mécaniciens professionnels, main-d’œuvre incluse</li>
+          <li><strong>250+</strong> professionnels d’encadrement</li>
+        </ul>
+        <Button href={liens.organisation} official variant="outline">Organisation et sécurité</Button>
+      </div>
+      <div class="secu-photos">
+        <figure class="reveal"><Image src={helico} alt={alt.helico} widths={[420, 640]} sizes="(min-width: 960px) 24vw, 46vw" loading="lazy" /></figure>
+        <figure class="reveal" style="--d:.12s"><Image src={assistance} alt={alt.assistance} widths={[420, 640]} sizes="(min-width: 960px) 24vw, 46vw" loading="lazy" /></figure>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .valeurs { background: var(--white); }
+  .eyebrow { font-size: 0.85rem; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: var(--violet-700); display: inline-flex; align-items: center; gap: 0.8rem; }
+  .eyebrow::before { content: ''; width: 36px; height: 3px; background: var(--coral-500); border-radius: 3px; }
+  h2 { margin-top: 1rem; font-size: clamp(2.2rem, 5.2vw, 4.4rem); text-transform: uppercase; color: var(--violet-900); letter-spacing: -0.025em; }
+  h2 span { color: var(--coral-700); }
+
+  .cartes { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.3rem; margin-top: clamp(2.2rem, 5vw, 3.6rem); }
+  .carte { position: relative; min-height: 460px; border-radius: var(--radius-l); overflow: hidden; display: flex; align-items: flex-end; isolation: isolate; color: var(--white); box-shadow: var(--shadow-s); transition: transform 0.45s var(--ease), box-shadow 0.45s; }
+  .carte:hover { transform: translateY(-8px); box-shadow: var(--shadow-m); }
+  .carte :global(img) { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: -2; transition: transform 1.2s var(--ease); }
+  .carte:hover :global(img) { transform: scale(1.07); }
+  .carte::before { content: ''; position: absolute; inset: 0; z-index: -1; background: linear-gradient(0deg, rgba(23, 10, 41, 0.96) 6%, rgba(23, 10, 41, 0.62) 45%, rgba(23, 10, 41, 0.05) 80%); }
+  .in { padding: 1.8rem 1.6rem; }
+  h3 { font-size: 1.55rem; text-transform: uppercase; line-height: 1.1; }
+  .carte p { margin-top: 0.7rem; font-size: 0.97rem; line-height: 1.55; color: rgba(255, 255, 255, 0.92); }
+  .actions { display: flex; flex-wrap: wrap; gap: 0.9rem; margin-top: 2.2rem; }
+
+  .securite { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: clamp(2rem, 5vw, 5rem); align-items: center; margin-top: clamp(4rem, 8vw, 6.5rem); padding: clamp(1.8rem, 4vw, 3.4rem); border-radius: var(--radius-l); background: var(--violet-50); border: 1px solid var(--violet-100); }
+  .secu-txt h3 { font-size: clamp(1.8rem, 3.4vw, 2.8rem); color: var(--violet-900); text-transform: uppercase; }
+  .secu-txt > p { margin-top: 1rem; color: var(--ink-soft); font-size: 1.05rem; }
+  .points { display: grid; grid-template-columns: 1fr 1fr; gap: 0.9rem 1.4rem; margin: 1.6rem 0 1.8rem; }
+  .points li { font-size: 0.95rem; line-height: 1.45; color: var(--ink-soft); }
+  .points strong { display: block; font-family: var(--font-title); font-size: 1.9rem; font-weight: 800; color: var(--coral-700); line-height: 1.1; }
+  .secu-photos { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+  .secu-photos figure { margin: 0; aspect-ratio: 3 / 4.3; border-radius: var(--radius-m); overflow: hidden; box-shadow: var(--shadow-s); }
+  .secu-photos figure:nth-child(2) { transform: translateY(1.6rem); }
+  .secu-photos :global(img) { width: 100%; height: 100%; object-fit: cover; }
+
+  @media (max-width: 1000px) { .cartes { grid-template-columns: 1fr; } .carte { min-height: 380px; } .securite { grid-template-columns: 1fr; } }
+  @media (max-width: 520px) { .points { grid-template-columns: 1fr; } .secu-photos figure:nth-child(2) { transform: none; } }
+</style>

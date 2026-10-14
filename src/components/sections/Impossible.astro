@@ -1,0 +1,51 @@
+---
+import { Image } from 'astro:assets';
+import affiche from '../../assets/campagne/affiche-canva.webp';
+import { alt } from '../../data/contenu';
+---
+<section class="section impossible" id="impossible" aria-labelledby="impossible-titre">
+  <div class="container grid">
+    <figure class="affiche reveal">
+      <Image src={affiche} alt={alt.affiche} widths={[420, 628]} sizes="(min-width: 900px) 34vw, 80vw" loading="lazy" />
+      <figcaption>Visuel de campagne · projet Canva</figcaption>
+    </figure>
+
+    <div class="txt">
+      <p class="eyebrow reveal">La force des femmes</p>
+      <h2 id="impossible-titre" class="reveal" style="--d:.06s">Impossible<br />n’est pas <span>Gazelle.</span></h2>
+      <p class="lead reveal" style="--d:.14s">
+        Depuis plus de 35 ans, le Rallye casse les codes d’un monde automobile à dominance masculine. Pour y parvenir, il a fallu traverser tous les « impossibles » : des femmes dans le monde de l’auto, s’orienter avec une simple carte et une boussole, concourir sans la vitesse.
+      </p>
+      <p class="reveal" style="--d:.2s">
+        Une gazelle n’est pas une proie. C’est une athlète d’endurance, qui avance avec précision, détermination et esprit d’équipe, au cœur du désert.
+      </p>
+      <ul class="traits reveal" style="--d:.28s" role="list">
+        <li>Détermination</li><li>Précision</li><li>Esprit d’équipe</li><li>Endurance</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<style>
+  .impossible { background: linear-gradient(180deg, var(--violet-50), var(--white)); overflow: hidden; }
+  .grid { display: grid; grid-template-columns: 0.8fr 1.2fr; gap: clamp(2rem, 6vw, 6rem); align-items: center; }
+  .affiche { position: relative; margin: 0; justify-self: center; width: min(100%, 440px); }
+  .affiche::before { content: ''; position: absolute; inset: -16px 16px 16px -16px; border-radius: var(--radius-l); background: linear-gradient(140deg, var(--violet-500), var(--rose-500)); z-index: 0; }
+  .affiche :global(img) { position: relative; z-index: 1; width: 100%; height: auto; border-radius: var(--radius-l); box-shadow: var(--shadow-m); }
+  .affiche figcaption { position: relative; z-index: 1; margin-top: 1.2rem; font-size: 0.78rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-soft); }
+  .eyebrow { font-size: 0.85rem; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: var(--violet-700); display: inline-flex; align-items: center; gap: 0.8rem; }
+  .eyebrow::before { content: ''; width: 36px; height: 3px; background: var(--coral-500); border-radius: 3px; }
+  h2 { margin-top: 1rem; font-size: clamp(2.6rem, 6.6vw, 5.8rem); text-transform: uppercase; color: var(--violet-900); letter-spacing: -0.03em; line-height: 0.96; }
+  h2 span { color: var(--coral-700); }
+  .lead { margin-top: 1.8rem; font-size: 1.2rem; color: var(--ink); }
+  .txt p:not(.eyebrow):not(.lead) { margin-top: 1.1rem; color: var(--ink-soft); font-size: 1.08rem; }
+  .traits { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-top: 2rem; }
+  .traits li { padding: 0.55rem 1.1rem; border-radius: 999px; background: var(--violet-700); color: var(--white); font-weight: 600; font-size: 0.9rem; }
+  .traits li:nth-child(2) { background: var(--coral-700); }
+  .traits li:nth-child(3) { background: var(--violet-900); }
+  .traits li:nth-child(4) { background: var(--ink); }
+  @media (max-width: 860px) {
+    .grid { grid-template-columns: 1fr; }
+    .affiche { width: min(100%, 360px); margin-bottom: 1rem; }
+  }
+</style>

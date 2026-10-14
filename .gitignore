@@ -1,0 +1,18 @@
+# Dépendances et builds
+node_modules/
+dist/
+.astro/
+
+# Configuration locale de l'environnement de développement
+.claude/
+
+# Données de recherche (audit, analyse de marché) : hors du dépôt du site
+rag_research/
+
+# Captures lourdes : les versions JPG sont suivies
+docs/captures/*.png
+
+# Système
+.DS_Store
+Thumbs.db
+*.log

@@ -1,0 +1,18 @@
+---
+// Rappel discret : prototype local, liens ↗ = site officiel actuel.
+---
+<aside class="proto" data-proto role="note" aria-label="Information sur le prototype">
+  <p><strong>Prototype V2</strong> · <span class="long">page d’accueil uniquement. Les liens marqués ↗ ouvrent le site officiel actuel.</span><span class="short">liens ↗ = site officiel</span></p>
+  <button type="button" data-proto-close aria-label="Masquer cette information">×</button>
+</aside>
+
+<style>
+  .proto { position: fixed; left: 1rem; bottom: 1rem; z-index: 95; display: flex; align-items: center; gap: 0.8rem; max-width: min(430px, calc(100vw - 2rem)); padding: 0.7rem 0.8rem 0.7rem 1.1rem; border-radius: 999px; background: rgba(23, 10, 41, 0.94); color: var(--white); font-size: 0.78rem; line-height: 1.35; box-shadow: var(--shadow-m); border: 1px solid rgba(255, 255, 255, 0.18); backdrop-filter: blur(8px); }
+  .proto strong { color: var(--coral-500); }
+  button { flex: none; width: 34px; height: 34px; border-radius: 50%; border: 0; background: rgba(255, 255, 255, 0.14); color: var(--white); font-size: 1.2rem; line-height: 1; }
+  button:hover { background: var(--coral-500); color: var(--ink); }
+  .proto[hidden] { display: none; }
+  .short { display: none; }
+  @media (max-width: 640px) { .long { display: none; } .short { display: inline; } .proto { padding-block: 0.45rem; border-radius: 999px; } }
+  @media (max-width: 520px) { .proto { border-radius: var(--radius-m); font-size: 0.74rem; } }
+</style>

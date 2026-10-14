@@ -1,0 +1,56 @@
+/* ------------------------------------------------------------------
+   Design tokens : toutes les couleurs et polices sont définies ici.
+   Sources : palette et polices du projet Canva (violet, corail, rose, blanc ;
+   Ambiguity Inline pour les titres, Poppins en secondaire) + couleurs du logo.
+   Les variantes foncées servent uniquement à garantir la lisibilité (WCAG AA).
+   ------------------------------------------------------------------ */
+:root {
+  /* Palette Canva */
+  --violet-500: #ba71ed;
+  --coral-500: #ff7d66;
+  --rose-500: #fb869e;
+  --white: #ffffff;
+
+  /* Déclinaisons de la même teinte (fonds sombres, textes sur fond clair) */
+  --violet-100: #efe2fa;
+  --violet-50: #f8f2fd;
+  --violet-700: #6b2fa0;   /* texte et boutons à texte blanc : 8,3:1 */
+  --violet-800: #4a2075;
+  --violet-900: #2b1247;
+  --violet-950: #170a29;
+  --coral-600: #f2654d;
+  --coral-700: #c2402c;    /* texte blanc dessus : 5,2:1 */
+  --rose-100: #fde7ec;
+
+  /* Couleurs du logo officiel (échantillonnées sur le fichier fourni) */
+  --logo-coral: #fc7c54;
+  --logo-blue: #445c94;
+
+  --ink: #1a0f2b;          /* texte sur fond clair */
+  --ink-soft: #4d4360;
+  --line: rgba(26, 15, 43, 0.12);
+
+  /* Typographie */
+  /* Ambiguity Inline n'est pas disponible : Poppins sert de repli provisoire.
+     Pour l'activer, ajouter @font-face dans base.css avec les fichiers fournis. */
+  --font-title: 'Ambiguity Inline', 'Poppins', system-ui, sans-serif;
+  --font-body: 'Poppins', system-ui, -apple-system, 'Segoe UI', sans-serif;
+
+  /* Échelle et mise en page */
+  --container: 1240px;
+  --gutter: clamp(1.25rem, 4vw, 3rem);
+  --section-y: clamp(4.5rem, 9vw, 8rem);
+  --radius-s: 10px;
+  --radius-m: 18px;
+  --radius-l: 28px;
+  --shadow-s: 0 4px 14px rgba(23, 10, 41, 0.12);
+  --shadow-m: 0 18px 40px rgba(23, 10, 41, 0.22);
+  --ease: cubic-bezier(0.22, 0.8, 0.24, 1);
+
+  --band-h: 36px;          /* bandeau du Haut Patronage */
+  --nav-h: 84px;           /* barre de navigation */
+}
+
+@media (max-width: 960px) {
+  :root { --nav-h: 72px; }
+}

@@ -1,0 +1,91 @@
+---
+import { Image } from 'astro:assets';
+import equipe from '../../assets/photos/equipage-pelles.webp';
+import Button from '../ui/Button.astro';
+import { etapes, garanties, alt } from '../../data/contenu';
+import { liens } from '../../data/site';
+---
+<section class="section parcours" id="devenir-gazelle" aria-labelledby="parcours-titre">
+  <div class="container">
+    <header class="head">
+      <div>
+        <p class="eyebrow reveal">Devenir Gazelle</p>
+        <h2 id="parcours-titre" class="reveal" style="--d:.06s">Personne ne naît Gazelle.<br /><span>Tout se construit.</span></h2>
+      </div>
+      <p class="intro reveal" style="--d:.14s">
+        Le Rallye est ouvert à toutes les femmes, qu’elles soient novices ou expérimentées. Voici le parcours réel d’une future participante, du premier contact à la ligne de départ.
+      </p>
+    </header>
+
+    <ol class="etapes" role="list" data-etapes>
+      {etapes.map((e, i) => (
+        <li class="etape reveal" style={`--d:${0.07 * i}s`} tabindex="0">
+          <span class="n" aria-hidden="true">{e.n}</span>
+          <div>
+            <h3>{e.titre}</h3>
+            <p>{e.texte}</p>
+          </div>
+        </li>
+      ))}
+    </ol>
+
+    <div class="bas">
+      <figure class="photo reveal">
+        <Image src={equipe} alt={alt.pelles} widths={[480, 900]} sizes="(min-width: 960px) 42vw, 92vw" loading="lazy" />
+      </figure>
+      <div class="side reveal" style="--d:.1s">
+        <h3>Rassurer, accompagner, préparer</h3>
+        <ul class="garanties" role="list">
+          {garanties.map((g) => (<li>{g}</li>))}
+        </ul>
+        <div class="actions">
+          <Button href={liens.demandeInfos} official>Demande d’infos</Button>
+          <Button href={liens.etapes} official variant="outline">Devenez Gazelle : toutes les étapes</Button>
+        </div>
+        <p class="liens">
+          <a class="official" href={liens.reunions} target="_blank" rel="noopener noreferrer">Réunion d’infos gratuite<span class="sr-only"> (site officiel)</span></a>
+          <a class="official" href={liens.conditions} target="_blank" rel="noopener noreferrer">Conditions d’inscription 2027<span class="sr-only"> (site officiel)</span></a>
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .parcours { background: var(--violet-50); }
+  .head { display: grid; grid-template-columns: 1.2fr 0.8fr; gap: clamp(1.5rem, 4vw, 4rem); align-items: end; }
+  .eyebrow { font-size: 0.85rem; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: var(--violet-700); display: inline-flex; align-items: center; gap: 0.8rem; }
+  .eyebrow::before { content: ''; width: 36px; height: 3px; background: var(--coral-500); border-radius: 3px; }
+  h2 { margin-top: 1rem; font-size: clamp(2.1rem, 5vw, 4.2rem); text-transform: uppercase; color: var(--violet-900); letter-spacing: -0.025em; }
+  h2 span { color: var(--coral-700); }
+  .intro { font-size: 1.12rem; color: var(--ink-soft); }
+
+  .etapes { counter-reset: e; display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.2rem; margin-top: clamp(2.5rem, 5vw, 4rem); position: relative; }
+  .etape { position: relative; display: grid; grid-template-columns: auto 1fr; gap: 1.1rem; align-items: start; padding: 1.7rem 1.5rem; border-radius: var(--radius-l); background: var(--white); border: 1px solid var(--violet-100); box-shadow: var(--shadow-s); transition: transform 0.4s var(--ease), box-shadow 0.4s, border-color 0.4s; outline-offset: 4px; }
+  .etape:hover, .etape:focus-visible { transform: translateY(-6px); box-shadow: var(--shadow-m); border-color: var(--violet-500); }
+  .n { display: grid; place-items: center; width: 52px; height: 52px; border-radius: 50%; background: var(--violet-700); color: var(--white); font-family: var(--font-title); font-weight: 800; font-size: 1.4rem; transition: background-color 0.4s, transform 0.4s var(--ease); }
+  .etape:hover .n, .etape:focus-visible .n { background: var(--coral-500); color: var(--ink); transform: scale(1.1) rotate(-6deg); }
+  h3 { font-size: 1.12rem; line-height: 1.2; color: var(--violet-900); font-family: var(--font-body); font-weight: 700; letter-spacing: 0; }
+  .etape p { margin-top: 0.55rem; font-size: 0.95rem; line-height: 1.6; color: var(--ink-soft); }
+
+  .bas { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(2rem, 5vw, 5rem); align-items: center; margin-top: clamp(3rem, 6vw, 5rem); }
+  .photo { margin: 0; border-radius: var(--radius-l); overflow: hidden; box-shadow: var(--shadow-m); aspect-ratio: 5 / 4; }
+  .photo :global(img) { width: 100%; height: 100%; object-fit: cover; transition: transform 1.2s var(--ease); }
+  .photo:hover :global(img) { transform: scale(1.05); }
+  .side h3 { font-family: var(--font-title); font-weight: 800; text-transform: uppercase; font-size: 1.7rem; letter-spacing: -0.01em; color: var(--violet-900); }
+  .garanties { margin-top: 1.2rem; display: grid; gap: 0.8rem; }
+  .garanties li { position: relative; padding-left: 2.1rem; color: var(--ink); }
+  .garanties li::before { content: ''; position: absolute; left: 0; top: 0.28em; width: 1.3rem; height: 1.3rem; border-radius: 50%; background: var(--coral-500) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M6 12.5l4 4 8-9' fill='none' stroke='%231a0f2b' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center / 70% no-repeat; }
+  .actions { display: flex; flex-wrap: wrap; gap: 0.8rem; margin-top: 1.8rem; }
+  .liens { display: flex; flex-wrap: wrap; gap: 0.4rem 1.6rem; margin-top: 1.3rem; font-size: 0.95rem; font-weight: 600; }
+  .liens a { color: var(--violet-700); text-underline-offset: 4px; }
+  .liens a:hover { color: var(--coral-700); }
+
+  @media (max-width: 1060px) { .etapes { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 860px) { .head, .bas { grid-template-columns: 1fr; } }
+  @media (max-width: 600px) {
+    .etapes { grid-template-columns: 1fr; padding-left: 0; }
+    .etapes::before { content: ''; position: absolute; left: 1.8rem; top: 1rem; bottom: 1rem; width: 3px; background: linear-gradient(var(--violet-500), var(--coral-500)); border-radius: 3px; opacity: 0.4; }
+    .etape { position: relative; }
+  }
+</style>

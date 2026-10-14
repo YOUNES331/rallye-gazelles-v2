@@ -1,0 +1,53 @@
+---
+import { Image } from 'astro:assets';
+
+// Logos et liens repris du pied de page du site officiel (provisoires).
+const logos = import.meta.glob('../../assets/partners/*', { eager: true, import: 'default' }) as Record<string, ImageMetadata>;
+const partenaires = [
+  { file: 'logo-omnt.webp', nom: 'Office National Marocain du Tourisme (Visit Morocco)', href: 'https://www.visitmorocco.com/fr' },
+  { file: 'logo-aicha.webp', nom: 'Aïcha', href: 'https://aicha.com/' },
+  { file: 'logo-afriquia.webp', nom: 'Afriquia', href: 'https://www.afriquia.ma/' },
+  { file: 'logo-chateau-roslane-diana-holding.webp', nom: 'Château Roslane, Diana Holding', href: 'http://www.dianaholding.com/' },
+  { file: 'logo-sidi-ali.webp', nom: 'Sidi Ali, Oulmès', href: 'https://www.oulmes.ma/' },
+  { file: 'logo-bosch.webp', nom: 'Bosch', href: 'https://www.bosch.fr' },
+  { file: 'logo-meridionale.webp', nom: 'La Méridionale', href: 'https://www.lameridionale.fr/' },
+  { file: 'logo-mdjs.webp', nom: 'La Marocaine des Jeux et des Sports', href: 'https://mdjs.ma/' },
+  { file: 'logo-cherie-fm.webp', nom: 'Chérie FM', href: 'https://www.cheriefm.fr/' },
+  { file: 'logo-foundation-prince-albert-II-de-manaco.webp', nom: 'Fondation Prince Albert II de Monaco', href: 'https://www.fpa2.org/' },
+  { file: 'logo-2m.webp', nom: '2M', href: 'https://2m.ma/fr' },
+  { file: 'logo-royal-air-maroc.webp', nom: 'Royal Air Maroc', href: 'https://www.royalairmaroc.com/fr-fr/' },
+  { file: 'logo-ocp.webp', nom: 'OCP', href: 'https://www.ocpgroup.ma/fr' },
+  { file: 'logo-ferrero.webp', nom: 'Ferrero', href: 'https://www.ferrero.fr/' },
+  { file: 'logo-24h-du-mans.webp', nom: '24 Heures du Mans', href: 'https://www.24h-lemans.com/' },
+  { file: 'logo-APSEM.webp', nom: 'APSEM', href: 'https://www.entreprisesportive.ma/fr/' },
+  { file: 'logo-paulpoirrier.webp', nom: 'Champagne Paul Poirrier', href: 'https://www.champagnepaulpoirrier.com/' },
+  { file: 'logo-brides-les-bains.png', nom: 'Brides-les-Bains', href: 'https://www.brides-les-bains.com/' },
+];
+const trouve = (f: string) => Object.entries(logos).find(([k]) => k.endsWith('/' + f))?.[1];
+---
+<section class="partenaires" aria-labelledby="part-titre">
+  <div class="container">
+    <h2 id="part-titre" class="reveal">Ils font avancer le Rallye</h2>
+    <ul class="logos" role="list">
+      {partenaires.map((p) => {
+        const img = trouve(p.file);
+        return img ? (
+          <li class="reveal">
+            <a href={p.href} target="_blank" rel="noopener noreferrer" aria-label={`${p.nom} (site du partenaire, nouvel onglet)`}>
+              <Image src={img} alt={p.nom} height={64} widths={[160, 320]} sizes="150px" loading="lazy" />
+            </a>
+          </li>
+        ) : null;
+      })}
+    </ul>
+  </div>
+</section>
+
+<style>
+  .partenaires { padding-block: clamp(3rem, 6vw, 5rem); background: var(--white); border-top: 1px solid var(--line); }
+  h2 { font-family: var(--font-body); font-size: 0.85rem; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: var(--ink-soft); text-align: center; }
+  .logos { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 1.2rem 2.6rem; margin-top: 2.2rem; }
+  .logos a { display: grid; place-items: center; height: 72px; min-width: 100px; padding: 0.3rem; border-radius: var(--radius-s); filter: grayscale(1); opacity: 0.7; transition: filter 0.35s, opacity 0.35s, transform 0.35s var(--ease); }
+  .logos a:hover, .logos a:focus-visible { filter: none; opacity: 1; transform: translateY(-3px); }
+  .logos :global(img) { height: 56px; width: auto; max-width: 150px; object-fit: contain; }
+</style>

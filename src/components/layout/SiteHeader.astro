@@ -1,0 +1,195 @@
+---
+import { Image } from 'astro:assets';
+import logo from '../../assets/logo/logo-gazelles.png';
+import { nav } from '../../data/navigation';
+import { site, liens } from '../../data/site';
+
+const ext = (item: { newTab?: boolean; href?: string }) => ({ target: '_blank', rel: 'noopener noreferrer' });
+---
+<header class="site-header" data-header>
+  <div class="band"><p>{site.patronage}</p></div>
+
+  <div class="bar">
+    <div class="bar-inner">
+      <a class="brand" href="#top" aria-label="Rallye Aïcha des Gazelles du Maroc, retour en haut de page">
+        <Image src={logo} alt="" width={120} height={120} loading="eager" />
+      </a>
+
+      <nav class="primary" aria-label="Navigation principale">
+        <ul>
+          {nav.map((item) =>
+            item.children ? (
+              <li class="has-sub" data-dropdown>
+                <button
+                  type="button"
+                  class:list={['top', { 'is-cta': item.label === 'Devenir Gazelle' }]}
+                  aria-expanded="false"
+                  aria-haspopup="true"
+                >
+                  {item.label === 'Contact' ? (
+                    <>
+                      <svg class="ico" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M3 6h18v12H3z M3 7l9 6 9-6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" /></svg>
+                      <span class="lbl-contact">{item.label}</span>
+                    </>
+                  ) : (
+                    item.label
+                  )}
+                  <svg class="chev" viewBox="0 0 12 8" width="11" height="8" aria-hidden="true"><path d="M1 1.5l5 5 5-5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" /></svg>
+                </button>
+                <ul class="sub">
+                  {item.children.map((c) =>
+                    c.children ? (
+                      <li class="group">
+                        <span class="group-label">{c.label}</span>
+                        <ul>
+                          {c.children.map((g) => (
+                            <li><a class="official" href={g.href} {...ext(g)}>{g.label}<span class="sr-only"> (site officiel)</span></a></li>
+                          ))}
+                        </ul>
+                      </li>
+                    ) : (
+                      <li><a class="official" href={c.href} {...ext(c)}>{c.label}<span class="sr-only"> (site officiel)</span></a></li>
+                    ),
+                  )}
+                </ul>
+              </li>
+            ) : (
+              <li><a class="top official" href={item.href} {...ext(item)}>{item.label}<span class="sr-only"> (s’ouvre dans un nouvel onglet)</span></a></li>
+            ),
+          )}
+        </ul>
+      </nav>
+
+      <a class="lang" href={liens.en} target="_blank" rel="noopener noreferrer" hreflang="en" lang="en" aria-label="English version (official site)">EN</a>
+
+      <button class="burger" type="button" aria-expanded="false" aria-controls="menu-mobile" data-burger>
+        <span class="sr-only">Menu</span>
+        <span class="bars" aria-hidden="true"><i></i><i></i><i></i></span>
+      </button>
+    </div>
+  </div>
+
+  <div id="menu-mobile" class="mobile" data-mobile hidden>
+    <nav aria-label="Navigation mobile">
+      <ul>
+        {nav.map((item) =>
+          item.children ? (
+            <li>
+              <details>
+                <summary class:list={{ 'is-cta': item.label === 'Devenir Gazelle' }}>{item.label}</summary>
+                <ul>
+                  {item.children.map((c) =>
+                    c.children ? (
+                      <li class="group">
+                        <span class="group-label">{c.label}</span>
+                        <ul>
+                          {c.children.map((g) => (
+                            <li><a class="official" href={g.href} {...ext(g)}>{g.label}</a></li>
+                          ))}
+                        </ul>
+                      </li>
+                    ) : (
+                      <li><a class="official" href={c.href} {...ext(c)}>{c.label}</a></li>
+                    ),
+                  )}
+                </ul>
+              </details>
+            </li>
+          ) : (
+            <li><a class="plain official" href={item.href} {...ext(item)}>{item.label}</a></li>
+          ),
+        )}
+        <li><a class="plain official" href={liens.en} target="_blank" rel="noopener noreferrer" lang="en">English</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<style>
+  .site-header { position: fixed; inset: 0 0 auto 0; z-index: 100; color: var(--white); }
+
+  /* Bandeau du Haut Patronage (élément conservé à l'identique) */
+  .band {
+    height: var(--band-h); display: grid; place-items: center; overflow: hidden;
+    background: var(--violet-950); transition: height 0.35s var(--ease), opacity 0.35s;
+  }
+  .band p { font-size: 0.78rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--rose-500); padding-inline: 1rem; text-align: center; line-height: 1.2; }
+  .is-scrolled .band { height: 0; opacity: 0; }
+
+  .bar { transition: background-color 0.35s, box-shadow 0.35s, backdrop-filter 0.35s; }
+  .is-scrolled .bar { background: rgba(23, 10, 41, 0.9); backdrop-filter: blur(14px); box-shadow: 0 8px 30px rgba(0, 0, 0, 0.25); }
+  .bar-inner { height: var(--nav-h); width: min(100% - 2 * var(--gutter), 1400px); margin-inline: auto; display: flex; align-items: center; gap: 1.2rem; transition: height 0.35s var(--ease); }
+  .is-scrolled .bar-inner { height: 70px; }
+
+  .brand { flex: none; display: block; line-height: 0; border-radius: 50%; box-shadow: 0 8px 22px rgba(0, 0, 0, 0.35); transition: transform 0.35s var(--ease); }
+  .brand:hover { transform: rotate(-4deg) scale(1.04); }
+  .brand :global(img) { width: 76px; height: 76px; border-radius: 50%; background: var(--white); transition: width 0.35s var(--ease), height 0.35s var(--ease); }
+  .is-scrolled .brand :global(img) { width: 56px; height: 56px; }
+
+  .primary { margin-left: auto; }
+  .primary > ul { display: flex; align-items: center; gap: 0.25rem; }
+  .top, .primary a.top {
+    display: inline-flex; align-items: center; gap: 0.45rem; background: none; border: 0; color: var(--white);
+    padding: 0.7rem 0.85rem; font-size: 0.95rem; font-weight: 500; text-decoration: none; border-radius: 999px; transition: background-color 0.2s, color 0.2s;
+  }
+  .top:hover, .has-sub.is-open > .top { background: rgba(255, 255, 255, 0.12); }
+  .top.is-cta { background: var(--coral-500); color: var(--ink); font-weight: 700; padding-inline: 1.15rem; margin-inline: 0.3rem; box-shadow: 0 8px 22px rgba(255, 125, 102, 0.35); }
+  .top.is-cta:hover, .has-sub.is-open > .top.is-cta { background: #ff9582; }
+  .chev { transition: transform 0.25s var(--ease); opacity: 0.8; }
+  .has-sub.is-open .chev { transform: rotate(180deg); }
+  .ico { flex: none; }
+
+  .has-sub { position: relative; }
+  .sub {
+    position: absolute; top: 100%; left: 50%; min-width: 270px; padding: 0.55rem; margin-top: 10px;
+    background: rgba(23, 10, 41, 0.97); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: var(--radius-m);
+    box-shadow: var(--shadow-m); opacity: 0; visibility: hidden; transform: translate(-50%, 8px);
+    transition: opacity 0.22s, transform 0.22s var(--ease), visibility 0.22s;
+  }
+  .has-sub:last-child .sub, .has-sub:nth-last-child(2) .sub { left: auto; right: 0; transform: translate(0, 8px); }
+  .has-sub::after { content: ''; position: absolute; left: 0; right: 0; top: 100%; height: 14px; }
+  .has-sub:hover > .sub, .has-sub.is-open > .sub { opacity: 1; visibility: visible; transform: translate(-50%, 0); }
+  .has-sub:last-child:hover > .sub, .has-sub:last-child.is-open > .sub,
+  .has-sub:nth-last-child(2):hover > .sub, .has-sub:nth-last-child(2).is-open > .sub { transform: translate(0, 0); }
+  .sub a { display: block; padding: 0.6rem 0.95rem; border-radius: var(--radius-s); color: rgba(255, 255, 255, 0.92); text-decoration: none; font-size: 0.93rem; transition: background-color 0.18s, color 0.18s; }
+  .sub a:hover { background: rgba(186, 113, 237, 0.22); color: var(--white); }
+  .group-label { display: block; padding: 0.7rem 0.95rem 0.2rem; font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--rose-500); }
+  .group ul a { padding-left: 1.5rem; }
+
+  .lang { font-weight: 700; font-size: 0.85rem; letter-spacing: 0.06em; text-decoration: none; padding: 0.45rem 0.75rem; border: 1.5px solid rgba(255, 255, 255, 0.5); border-radius: 999px; transition: background-color 0.2s, color 0.2s; }
+  .lang:hover { background: var(--white); color: var(--violet-900); }
+
+  .burger { display: none; margin-left: auto; width: 52px; height: 52px; border-radius: 50%; border: 1.5px solid rgba(255, 255, 255, 0.5); background: rgba(255, 255, 255, 0.08); place-items: center; }
+  .bars { position: relative; width: 22px; height: 16px; display: block; }
+  .bars i { position: absolute; left: 0; width: 100%; height: 2px; background: var(--white); border-radius: 2px; transition: transform 0.3s var(--ease), opacity 0.2s, top 0.3s var(--ease); }
+  .bars i:nth-child(1) { top: 0; } .bars i:nth-child(2) { top: 7px; } .bars i:nth-child(3) { top: 14px; }
+  .burger[aria-expanded='true'] .bars i:nth-child(1) { top: 7px; transform: rotate(45deg); }
+  .burger[aria-expanded='true'] .bars i:nth-child(2) { opacity: 0; }
+  .burger[aria-expanded='true'] .bars i:nth-child(3) { top: 7px; transform: rotate(-45deg); }
+
+  .mobile { background: var(--violet-950); max-height: calc(100svh - var(--band-h) - var(--nav-h)); overflow-y: auto; border-top: 1px solid rgba(255, 255, 255, 0.1); }
+  .is-scrolled .mobile { max-height: calc(100svh - 70px); }
+  .mobile nav { padding: 0.5rem var(--gutter) 2rem; }
+  .mobile li { border-bottom: 1px solid rgba(255, 255, 255, 0.1); }
+  .mobile summary, .mobile a.plain { display: flex; justify-content: space-between; align-items: center; min-height: 56px; padding: 0.4rem 0.2rem; font-size: 1.1rem; font-weight: 600; text-decoration: none; list-style: none; cursor: pointer; }
+  .mobile summary::-webkit-details-marker { display: none; }
+  .mobile summary::after { content: '+'; font-size: 1.5rem; font-weight: 400; color: var(--coral-500); transition: transform 0.25s; }
+  .mobile details[open] > summary::after { transform: rotate(45deg); }
+  .mobile summary.is-cta { color: var(--coral-500); }
+  .mobile details ul { padding: 0 0 0.8rem 0.4rem; }
+  .mobile details li { border: 0; }
+  .mobile details a { display: block; padding: 0.7rem 0.4rem; min-height: 44px; text-decoration: none; color: rgba(255, 255, 255, 0.88); }
+  .mobile .group-label { padding-left: 0.4rem; }
+
+  @media (max-width: 1180px) {
+    .lbl-contact { display: none; }
+    .top, .primary a.top { padding-inline: 0.65rem; font-size: 0.9rem; }
+  }
+  @media (max-width: 1060px) {
+    .primary, .lang { display: none; }
+    .burger { display: grid; }
+    .brand :global(img) { width: 60px; height: 60px; }
+    .is-scrolled .brand :global(img) { width: 50px; height: 50px; }
+    .is-scrolled .bar-inner { height: 64px; }
+  }
+</style>

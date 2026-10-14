@@ -1,0 +1,68 @@
+---
+import { Image } from 'astro:assets';
+import logo from '../../assets/logo/logo-gazelles.png';
+import { footerLiens, sections } from '../../data/navigation';
+import { site, off } from '../../data/site';
+
+const colonnes = [
+  { titre: 'Le Rallye', liens: footerLiens.rallye },
+  { titre: 'Devenir Gazelle', liens: footerLiens.devenir },
+  { titre: 'Univers Maïenga', liens: footerLiens.univers },
+  { titre: 'Suivez-nous', liens: footerLiens.reseaux },
+];
+---
+<footer class="footer">
+  <div class="container haut">
+    <div class="id">
+      <a class="logo" href="#top" aria-label="Retour en haut de page"><Image src={logo} alt="Rallye Aïcha des Gazelles du Maroc" width={110} height={110} loading="lazy" /></a>
+      <p class="patronage">{site.patronage}</p>
+      <p class="contact"><a href={`mailto:${site.contact}`}>{site.contact}</a></p>
+    </div>
+
+    <nav class="cols" aria-label="Pied de page">
+      {colonnes.map((c) => (
+        <div>
+          <h2>{c.titre}</h2>
+          <ul>
+            {c.liens.map((l) => (<li><a class="official" href={l.href} target="_blank" rel="noopener noreferrer">{l.label}<span class="sr-only"> (s’ouvre dans un nouvel onglet)</span></a></li>))}
+          </ul>
+        </div>
+      ))}
+      <div>
+        <h2>Dans cette page</h2>
+        <ul>
+          {sections.map((s) => (<li><a href={`#${s.id}`}>{s.label}</a></li>))}
+        </ul>
+      </div>
+    </nav>
+  </div>
+
+  <div class="container bas">
+    <p>© {new Date().getFullYear()} {site.nom}. Photographies : Rallye Aïcha des Gazelles (visuels officiels provisoires).</p>
+    <p>
+      <a class="official" href={off('/')} target="_blank" rel="noopener noreferrer">Mentions légales<span class="sr-only"> (site officiel)</span></a>
+      <a class="official" href={off('/')} target="_blank" rel="noopener noreferrer">Charte de confidentialité<span class="sr-only"> (site officiel)</span></a>
+    </p>
+  </div>
+</footer>
+
+<style>
+  .footer { background: var(--violet-950); color: rgba(255, 255, 255, 0.86); padding-top: clamp(3rem, 6vw, 5rem); }
+  .haut { display: grid; grid-template-columns: 0.9fr 2.1fr; gap: clamp(2rem, 5vw, 5rem); }
+  .logo { display: inline-block; line-height: 0; border-radius: 50%; }
+  .logo :global(img) { width: 96px; height: 96px; border-radius: 50%; background: var(--white); }
+  .patronage { margin-top: 1.2rem; font-size: 0.8rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--rose-500); max-width: 16rem; line-height: 1.5; }
+  .contact { margin-top: 1rem; font-size: 0.95rem; }
+  .contact a { text-underline-offset: 4px; }
+  .cols { display: grid; grid-template-columns: repeat(5, 1fr); gap: 1.6rem; }
+  h2 { font-family: var(--font-body); font-size: 0.78rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--coral-500); margin-bottom: 1rem; }
+  .cols ul { display: grid; gap: 0.15rem; }
+  .cols a { display: inline-block; padding: 0.3rem 0; font-size: 0.93rem; text-decoration: none; color: rgba(255, 255, 255, 0.86); transition: color 0.2s; }
+  .cols a:hover { color: var(--white); text-decoration: underline; text-underline-offset: 4px; }
+  .bas { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 0.8rem 2rem; margin-top: clamp(2.5rem, 5vw, 4rem); padding-block: 1.5rem 2rem; border-top: 1px solid rgba(255, 255, 255, 0.14); font-size: 0.82rem; color: rgba(255, 255, 255, 0.65); }
+  .bas p:last-child { display: flex; gap: 1.4rem; }
+  .bas a { color: rgba(255, 255, 255, 0.8); text-underline-offset: 4px; }
+  @media (max-width: 1100px) { .cols { grid-template-columns: repeat(3, 1fr); } }
+  @media (max-width: 860px) { .haut { grid-template-columns: 1fr; } }
+  @media (max-width: 520px) { .cols { grid-template-columns: repeat(2, 1fr); } }
+</style>

@@ -1,0 +1,23 @@
+---
+// Indicateur latéral : ancres vers les sections de la page d'accueil (visible sur grand écran).
+import { sections } from '../../data/navigation';
+---
+<nav class="dots" aria-label="Sections de la page" data-dots>
+  <ul>
+    {sections.map((s) => (
+      <li><a href={`#${s.id}`} data-spy={s.id}><span class="tip">{s.label}</span><i aria-hidden="true"></i></a></li>
+    ))}
+  </ul>
+</nav>
+
+<style>
+  .dots { position: fixed; right: 1.1rem; top: 50%; transform: translateY(-50%); z-index: 90; opacity: 0; pointer-events: none; transition: opacity 0.4s; }
+  :global(.has-dots) .dots { opacity: 1; pointer-events: auto; }
+  ul { display: grid; gap: 0.35rem; }
+  a { position: relative; display: grid; place-items: center; width: 28px; height: 28px; text-decoration: none; }
+  i { width: 11px; height: 11px; border-radius: 50%; background: transparent; border: 2px solid var(--violet-700); box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.7); transition: transform 0.3s var(--ease), background-color 0.3s; }
+  a:hover i, a.is-active i { background: var(--coral-500); border-color: var(--coral-700); transform: scale(1.35); }
+  .tip { position: absolute; right: 100%; margin-right: 0.6rem; white-space: nowrap; padding: 0.4rem 0.8rem; border-radius: 999px; background: var(--violet-950); color: var(--white); font-size: 0.8rem; font-weight: 600; opacity: 0; transform: translateX(8px); pointer-events: none; transition: opacity 0.25s, transform 0.25s var(--ease); }
+  a:hover .tip, a:focus-visible .tip { opacity: 1; transform: none; }
+  @media (max-width: 1200px) { .dots { display: none; } }
+</style>
